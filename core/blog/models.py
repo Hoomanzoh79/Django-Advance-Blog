@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
-
 # Getting user model here 
 User = get_user_model()
 
