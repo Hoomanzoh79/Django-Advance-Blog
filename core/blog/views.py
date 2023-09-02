@@ -6,6 +6,7 @@ from .forms import PostForm
 from django.contrib.auth.mixins import (LoginRequiredMixin,PermissionRequiredMixin)
 
 
+
 class IndexTemplateView(TemplateView):
     template_name = 'index.html'
 
@@ -64,3 +65,4 @@ class PostEditView(UpdateView):
 class PostDeleteView(DeleteView):
     model = Post
     success_url = '/blog/post/'
+
