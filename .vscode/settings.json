@@ -4,6 +4,8 @@
         "filterset",
         "Hooman",
         "paginations",
+        "redoc",
+        "simplejwt",
         "yasg"
     ]
 }

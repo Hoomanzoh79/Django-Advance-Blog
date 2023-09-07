@@ -1,9 +1,11 @@
+from typing import Any, Dict
 from rest_framework import serializers
-from accounts.models import User
+from accounts.models import User,Profile
 from django.core import exceptions
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 
@@ -61,9 +63,45 @@ class CustomAuthTokenSerializer(serializers.Serializer):
             if not user:
                 msg = _('Unable to log in with provided credentials.')
                 raise serializers.ValidationError(msg, code='authorization')
+            if not user.is_verified :
+                raise serializers.ValidationError({'details':'user is not verified'})
         else:
             msg = _('Must include "username" and "password".')
             raise serializers.ValidationError(msg, code='authorization')
 
         attrs['user'] = user
         return attrs
+
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        validate_data = super().validate(attrs)
+        validate_data['email'] = self.user.email
+        validate_data['user_id'] = self.user.id
+        return validate_data
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+    new_password1 = serializers.CharField(required=True)
+
+    def validate(self, attrs):
+        if attrs.get('new_password') != attrs.get('new_password1'):
+            raise serializers.ValidationError({"detail":"passwords doesn't match"})
+        try:
+            validate_password(attrs.get('new_password'))
+        except exceptions.ValidationError as e:
+            raise serializers.ValidationError({'new_password':list(e.messages)})
+        
+        return super().validate(attrs)
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    """retrieve or update profile data"""
+    # get the user email from User model
+    email = serializers.CharField(source='user.email',read_only=True)
+
+    class Meta:
+        model = Profile
+        fields = ('id','email','first_name','last_name','image','description')
