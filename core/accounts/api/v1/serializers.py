@@ -1,4 +1,3 @@
-from typing import Any, Dict
 from rest_framework import serializers
 from accounts.models import User,Profile
 from django.core import exceptions
