@@ -19,4 +19,7 @@ urlpatterns = [
     # change password
     path('change-password/',views.ChangePasswordApiView.as_view(),name='change-password'),
 
+    # confirmation
+    path('test-email/',views.TestEmailSend.as_view(),name='test-email'),
+
 ]
