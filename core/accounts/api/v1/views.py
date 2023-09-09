@@ -10,6 +10,10 @@ from accounts.models import User,Profile
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.shortcuts import get_object_or_404
+# from django.core.mail import send_mail
+from mail_templated import send_mail
+
+
 
 class RegistrationApiView(GenericAPIView):
     serializer_class = RegistrationSerializer
@@ -89,3 +93,14 @@ class ProfileApiView(RetrieveUpdateAPIView):
         # getting the user that's logged in 
         logged_in_user = get_object_or_404(queryset, user=self.request.user)
         return logged_in_user
+    
+
+class TestEmailSend(GenericAPIView):
+    def get(self,request, *args, **kwargs):
+        send_mail(
+             'email/hello.tpl', 
+             {'name': 'Hooman'}, 
+             'admin@admin.com', 
+             ['hoomanemi1999@gmail.com']
+             )
+        return Response('email sent!')
