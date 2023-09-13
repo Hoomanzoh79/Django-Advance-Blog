@@ -172,3 +172,54 @@ class ActivationResendApiView(GenericAPIView):
         refresh = RefreshToken.for_user(user)
         return str(refresh.access_token)
 
+
+class ResetPasswordApiView(GenericAPIView):
+
+    serializer_class = PasswordResetSerializer
+
+    def post(self,request, *args, **kwargs):
+            serializer = PasswordResetSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            user_obj = serializer.validated_data['user']
+            email = serializer.validated_data['email']
+            token = self.get_tokens_for_user(user_obj)
+            message = EmailMessage('email/password_reset.tpl',  
+                            {'token': token} , 
+                            'admin@admin.com',
+                            to=[email],
+                            )
+            message.send() 
+            return Response({'details':'password reset link has been sent to your email!'},status=status.HTTP_200_OK)
+    
+    def get_tokens_for_user(self,user):
+        refresh = RefreshToken.for_user(user)
+        return str(refresh.access_token)
+    
+
+
+class ResetPasswordConfirmApiView(GenericAPIView):
+    serializer_class = PasswordResetConfirmSerializer
+
+    def get(self,request,token, *args, **kwargs):
+        return Response('Please enter your new password')
+
+    def post(self,request,token, *args, **kwargs):
+        serializer = PasswordResetConfirmSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        # decode token
+        try:
+            token = jwt.decode(token,settings.SECRET_KEY, algorithms=['HS256'])
+            # find user id
+            user_id = token.get('user_id') 
+        # exception handlings
+        except ExpiredSignatureError:
+            return Response({'details':'token has been expired'},status=status.HTTP_400_BAD_REQUEST)
+        except InvalidSignatureError:
+            return Response({'details':'token is invalid'},status=status.HTTP_400_BAD_REQUEST)
+    
+        # find user from id
+        user = get_object_or_404(User,pk=user_id)
+        # set the newpassword
+        user.set_password(serializer.data.get("new_password"))
+        user.save()
+        return Response({'detail':'password has been reset successfully'},status=status.HTTP_200_OK)
