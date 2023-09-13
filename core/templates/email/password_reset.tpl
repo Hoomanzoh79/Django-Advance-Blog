@@ -1,9 +1,10 @@
 {% extends "mail_templated/base.tpl" %}
 
 {% block subject %}
-Hello
+Password reset
 {% endblock %}
 
 {% block html %}
-This is a test for email
+Hello 
+127.0.0.1:8000/accounts/api/v1/reset-password/confirm/{{token}}/
 {% endblock %}

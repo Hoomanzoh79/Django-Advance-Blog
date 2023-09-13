@@ -1,9 +1,9 @@
 {% extends "mail_templated/base.tpl" %}
 
 {% block subject %}
-Hello
+Account Activation
 {% endblock %}
 
 {% block html %}
-This is a test for email
+127.0.0.1:8000/accounts/api/v1/activation/confirm/{{token}}/
 {% endblock %}

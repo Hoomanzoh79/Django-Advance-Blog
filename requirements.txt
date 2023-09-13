@@ -15,5 +15,3 @@ djangorestframework-simplejwt
 
 # email 3rd party
 django-mail-templated
-
-#testing our test branch

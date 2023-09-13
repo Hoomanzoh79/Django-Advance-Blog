@@ -5,6 +5,7 @@ from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from django.shortcuts import get_object_or_404
 
 
 
@@ -104,3 +105,47 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ('id','email','first_name','last_name','image','description')
+
+
+class ActivationResendSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+
+    def validate(self, attrs):
+        email = attrs.get("email")
+        try:
+            user_obj = User.objects.get(email=email)
+        except User.DoesNotExist:
+            raise serializers.ValidationError({"detail": "user does not exist"})
+        if user_obj.is_verified:
+            raise serializers.ValidationError(
+                {"detail": "user is already activated and verified"}
+            )
+        attrs["user"] = user_obj
+        return super().validate(attrs)
+
+class PasswordResetSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+
+    def validate(self, attrs):
+        email = attrs.get("email")
+        try:
+            user_obj = User.objects.get(email=email)
+        except User.DoesNotExist:
+            raise serializers.ValidationError({"detail": "user does not exist with this email"})
+        
+        attrs['user'] = user_obj
+        return super().validate(attrs)
+
+class PasswordResetConfirmSerializer(serializers.Serializer):
+    new_password = serializers.CharField(required=True)
+    new_password1 = serializers.CharField(required=True)
+
+    def validate(self, attrs):
+        if attrs.get('new_password') != attrs.get('new_password1'):
+            raise serializers.ValidationError({"detail":"passwords doesn't match"})
+        try:
+            validate_password(attrs.get('new_password'))
+        except exceptions.ValidationError as e:
+            raise serializers.ValidationError({'new_password':list(e.messages)})
+        
+        return super().validate(attrs)
