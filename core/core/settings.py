@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django_filters',
     'drf_yasg',
     'rest_framework_simplejwt',
+    'djoser',
     # email 3rd party
     'mail_templated',
 ]

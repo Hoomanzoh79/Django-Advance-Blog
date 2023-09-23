@@ -2,7 +2,7 @@ from rest_framework.generics import GenericAPIView,RetrieveUpdateAPIView
 from rest_framework.views import APIView
 from .serializers import (RegistrationSerializer,CustomAuthTokenSerializer,
                           CustomTokenObtainPairSerializer,ChangePasswordSerializer,ProfileSerializer,ActivationResendSerializer,
-                          PasswordResetSerializer,PasswordResetConfirmSerializer)
+                          ResetPasswordEmailSerializer,ResetPasswordConfirmSerializer)
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -173,12 +173,12 @@ class ActivationResendApiView(GenericAPIView):
         return str(refresh.access_token)
 
 
-class ResetPasswordApiView(GenericAPIView):
+class ResetPasswordEmailApiView(GenericAPIView):
 
-    serializer_class = PasswordResetSerializer
+    serializer_class = ResetPasswordEmailSerializer
 
     def post(self,request, *args, **kwargs):
-            serializer = PasswordResetSerializer(data=request.data)
+            serializer = ResetPasswordEmailSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)
             user_obj = serializer.validated_data['user']
             email = serializer.validated_data['email']
@@ -198,13 +198,13 @@ class ResetPasswordApiView(GenericAPIView):
 
 
 class ResetPasswordConfirmApiView(GenericAPIView):
-    serializer_class = PasswordResetConfirmSerializer
+    serializer_class = ResetPasswordConfirmSerializer
 
     def get(self,request,token, *args, **kwargs):
         return Response('Please enter your new password')
 
     def post(self,request,token, *args, **kwargs):
-        serializer = PasswordResetConfirmSerializer(data=request.data)
+        serializer = ResetPasswordConfirmSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         # decode token
         try:

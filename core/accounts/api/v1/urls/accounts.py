@@ -24,7 +24,7 @@ urlpatterns = [
     path('change-password/',views.ChangePasswordApiView.as_view(),name='change-password'),
 
     # reset password link via email
-    path('reset-password/',views.ResetPasswordApiView.as_view(),name='reset-password'),
+    path('reset-password/',views.ResetPasswordEmailApiView.as_view(),name='reset-password'),
 
     # reset password confirm
     path('reset-password/confirm/<str:token>/',views.ResetPasswordConfirmApiView.as_view(),name='reset-password-confirm'),
