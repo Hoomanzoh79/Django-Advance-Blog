@@ -10,7 +10,10 @@ from django.views.generic import (
     DeleteView,
 )
 from .forms import PostForm
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import (
+    LoginRequiredMixin,
+    PermissionRequiredMixin,
+)
 
 
 class IndexTemplateView(TemplateView):

@@ -5,7 +5,9 @@ from .users import User
 
 
 class Profile(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="profile")
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="profile"
+    )
     first_name = models.CharField(max_length=250)
     last_name = models.CharField(max_length=250)
     image = models.ImageField(blank=True, null=True)

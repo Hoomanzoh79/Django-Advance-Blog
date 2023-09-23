@@ -111,7 +111,9 @@ class ChangePasswordApiView(GenericAPIView):
 
         if serializer.is_valid():
             # Check old password
-            if not self.object.check_password(serializer.data.get("old_password")):
+            if not self.object.check_password(
+                serializer.data.get("old_password")
+            ):
                 return Response(
                     {"old_password": ["Wrong password."]},
                     status=status.HTTP_400_BAD_REQUEST,
@@ -120,7 +122,8 @@ class ChangePasswordApiView(GenericAPIView):
             self.object.set_password(serializer.data.get("new_password"))
             self.object.save()
             return Response(
-                {"details": "password changed successfully"}, status=status.HTTP_200_OK
+                {"details": "password changed successfully"},
+                status=status.HTTP_200_OK,
             )
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -156,7 +159,9 @@ class ActivationApiView(APIView):
     def get(self, request, token, *args, **kwargs):
         # decode token
         try:
-            token = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
+            token = jwt.decode(
+                token, settings.SECRET_KEY, algorithms=["HS256"]
+            )
             # find user id
             user_id = token.get("user_id")
         # exception handlings
@@ -167,13 +172,16 @@ class ActivationApiView(APIView):
             )
         except InvalidSignatureError:
             return Response(
-                {"details": "token is invalid"}, status=status.HTTP_400_BAD_REQUEST
+                {"details": "token is invalid"},
+                status=status.HTTP_400_BAD_REQUEST,
             )
         # find user from id
         user = get_object_or_404(User, pk=user_id)
         # for users that are already verified
         if user.is_verified:
-            return Response({"details": "your account has already been verified"})
+            return Response(
+                {"details": "your account has already been verified"}
+            )
         # activate user
         user.is_verified = True
         user.save()
@@ -242,7 +250,9 @@ class ResetPasswordConfirmApiView(GenericAPIView):
         serializer.is_valid(raise_exception=True)
         # decode token
         try:
-            token = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
+            token = jwt.decode(
+                token, settings.SECRET_KEY, algorithms=["HS256"]
+            )
             # find user id
             user_id = token.get("user_id")
         # exception handlings
@@ -253,7 +263,8 @@ class ResetPasswordConfirmApiView(GenericAPIView):
             )
         except InvalidSignatureError:
             return Response(
-                {"details": "token is invalid"}, status=status.HTTP_400_BAD_REQUEST
+                {"details": "token is invalid"},
+                status=status.HTTP_400_BAD_REQUEST,
             )
 
         # find user from id
