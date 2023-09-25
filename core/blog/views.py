@@ -25,13 +25,6 @@ class IndexView(TemplateView):
         context["posts"] = Post.objects.all()
         return context
 
-
-"""
-class RedirectToFarsroid(RedirectView):
-    url = 'https://www.farsroid.com/'
-"""
-
-
 class PostListView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     # model = Post
     queryset = Post.objects.all()

@@ -1,6 +1,6 @@
 from django.test import TestCase,SimpleTestCase
 from django.urls import reverse,resolve
-from .views import IndexView,PostListView,PostDetailView
+from blog.views import IndexView,PostListView,PostDetailView
 
 
 class TestUrl(TestCase):
