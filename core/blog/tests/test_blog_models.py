@@ -25,3 +25,4 @@ class TestPostModel(TestCase):
 
         self.assertTrue(Post.objects.filter(pk=post.id).exists())
         self.assertEquals(post.title,'test-title')
+        self.assertEquals(Post.objects.count(),1)
