@@ -38,7 +38,7 @@ class PostListView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     #     return posts
 
 
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin,DetailView):
     model = Post
 
 
