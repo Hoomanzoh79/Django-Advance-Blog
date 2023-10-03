@@ -26,7 +26,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 import jwt
 from django.conf import settings
 from jwt.exceptions import ExpiredSignatureError, InvalidSignatureError
-from rest_framework.decorators import action
 
 
 class RegistrationApiView(GenericAPIView):
