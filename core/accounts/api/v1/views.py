@@ -111,9 +111,7 @@ class ChangePasswordApiView(GenericAPIView):
 
         if serializer.is_valid():
             # Check old password
-            if not self.object.check_password(
-                serializer.data.get("old_password")
-            ):
+            if not self.object.check_password(serializer.data.get("old_password")):
                 return Response(
                     {"old_password": ["Wrong password."]},
                     status=status.HTTP_400_BAD_REQUEST,
@@ -159,9 +157,7 @@ class ActivationApiView(APIView):
     def get(self, request, token, *args, **kwargs):
         # decode token
         try:
-            token = jwt.decode(
-                token, settings.SECRET_KEY, algorithms=["HS256"]
-            )
+            token = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
             # find user id
             user_id = token.get("user_id")
         # exception handlings
@@ -179,9 +175,7 @@ class ActivationApiView(APIView):
         user = get_object_or_404(User, pk=user_id)
         # for users that are already verified
         if user.is_verified:
-            return Response(
-                {"details": "your account has already been verified"}
-            )
+            return Response({"details": "your account has already been verified"})
         # activate user
         user.is_verified = True
         user.save()
@@ -250,9 +244,7 @@ class ResetPasswordConfirmApiView(GenericAPIView):
         serializer.is_valid(raise_exception=True)
         # decode token
         try:
-            token = jwt.decode(
-                token, settings.SECRET_KEY, algorithms=["HS256"]
-            )
+            token = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
             # find user id
             user_id = token.get("user_id")
         # exception handlings

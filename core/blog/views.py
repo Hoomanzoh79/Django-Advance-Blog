@@ -25,6 +25,7 @@ class IndexView(TemplateView):
         context["posts"] = Post.objects.all()
         return context
 
+
 class PostListView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     # model = Post
     queryset = Post.objects.all()
@@ -38,7 +39,7 @@ class PostListView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     #     return posts
 
 
-class PostDetailView(LoginRequiredMixin,DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
     model = Post
 
 
