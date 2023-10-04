@@ -11,12 +11,12 @@ jobs:
 
   Test:
     name: Test
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v3
     - name: Setup Docker-Compose
       run: docker-compose up -d
     - name: Run Tests
-      run: docker exec backend sh -c "pytest ."
+      run: docker-compose exec backend sh -c "pytest ."
     - name: Run Flake8
-      run: docker exec backend sh -c "flake8 ."
+      run: docker-compose exec backend sh -c "flake8 ."
