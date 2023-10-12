@@ -11,6 +11,7 @@ drf-yasg[validation]
 djangorestframework-simplejwt
 djoser
 Faker
+django-cors-headers
 
 # deployment modules
 
