@@ -24,3 +24,8 @@ black
 flake8
 pytest
 pytest-django
+
+
+# background processing and cache
+celery
+redis
