@@ -1,13 +1,13 @@
-from locust import HttpUser, task
+from locust import HttpUser,task,between
 
 class QuickstartUser(HttpUser):
 
     def on_start(self):
         response = self.client.post('/accounts/api/v2/jwt/create/',data={
-              "email": "admin@admin.com",
-              "password": "Alishab13",
+            "email":"admin@admin.com",
+            "password":"Alishab13",
         }).json()
-        self.client.headers = {"Authorization": f"Bearer {response.get('access',None)}"}
+        self.client.headers = {'Authorization':f"Bearer {response.get('access',None)}"}
     
     @task
     def post_list(self):

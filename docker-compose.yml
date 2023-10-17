@@ -54,7 +54,7 @@ services:
       - ./core/locust:/mnt/locust
     command: -f /mnt/locust/locustfile.py --master -H http://backend:8000
   
-  worker:
+  locust-worker:
     image: locustio/locust
     volumes:
       - ./core/locust:/mnt/locust
