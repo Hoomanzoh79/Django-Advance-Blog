@@ -29,3 +29,4 @@ pytest-django
 # background processing and cache
 celery
 redis
+django-redis

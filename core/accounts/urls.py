@@ -9,4 +9,5 @@ urlpatterns = [
     path("api/v2/", include("djoser.urls")),
     path("api/v2/", include("djoser.urls.jwt")),
     path('send-email/',views.send_email,name='send-email'),
+    path('test/',views.test,name='test'),
 ]
