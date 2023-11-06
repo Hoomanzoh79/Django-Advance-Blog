@@ -14,7 +14,7 @@ Faker
 django-cors-headers
 
 # deployment modules
-
+gunicorn
 
 # email 3rd party
 django-mail-templated
@@ -30,3 +30,4 @@ pytest-django
 celery
 redis
 django-redis
+django_celery_beat
