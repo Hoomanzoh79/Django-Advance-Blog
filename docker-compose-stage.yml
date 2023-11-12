@@ -25,6 +25,15 @@ services:
     depends_on:
       - redis
       - db
+  
+  worker:
+    build: .
+    command: celery -A core worker --loglevel=info
+    volumes:
+      - ./core:/app/
+    depends_on:
+      - redis
+      - backend
     
   db:
     image: postgres:14
