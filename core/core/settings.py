@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     # my apps
     "accounts",
     "blog",
+    "weather",
     # DRF
     "rest_framework",
     "rest_framework.authtoken",
