@@ -31,3 +31,6 @@ celery
 redis
 django-redis
 django_celery_beat
+
+# databse 
+psycopg2-binary
