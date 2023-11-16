@@ -30,4 +30,4 @@ pytest-django
 celery
 redis
 django-redis
-django_celery_beat
+django-celery-beat
