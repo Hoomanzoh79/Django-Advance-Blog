@@ -34,6 +34,7 @@ services:
     depends_on:
       - redis
       - backend
+      - db
     
   db:
     image: postgres:14
@@ -53,6 +54,7 @@ services:
     depends_on:
       - redis
       - backend
+      - db
   
 volumes:
   static_volume:
