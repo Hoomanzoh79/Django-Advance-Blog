@@ -24,8 +24,9 @@ class IndexView(TemplateView):
         context["posts"] = Post.objects.all()
         return context
 
+
 class PostListApiView(TemplateView):
-    template_name = 'blog/post_list_api.html'
+    template_name = "blog/post_list_api.html"
 
 
 class PostListView(PermissionRequiredMixin, LoginRequiredMixin, ListView):

@@ -20,7 +20,7 @@ def common_user():
 
 
 @pytest.mark.django_db
-class TestPostApi():
+class TestPostApi:
     def test_get_post_response_200_status(self, api_client):
         url = reverse("blog:api-v1:post-list")
         response = api_client.get(url)

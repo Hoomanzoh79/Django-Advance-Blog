@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("SECRET_KEY",default='Test')
+SECRET_KEY = config("SECRET_KEY", default="Test")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -57,8 +57,8 @@ INSTALLED_APPS = [
     "corsheaders",
     # email 3rd party
     "mail_templated",
-    # celery 
-    'django_celery_beat',
+    # celery
+    "django_celery_beat",
 ]
 
 MIDDLEWARE = [
@@ -191,7 +191,7 @@ CORS_ALLOWED_ORIGINS = [
 
 
 # celery configs
-CELERY_BROKER_URL = 'redis://redis:6379/1'
+CELERY_BROKER_URL = "redis://redis:6379/1"
 
 # caching configs
 CACHES = {
@@ -200,6 +200,6 @@ CACHES = {
         "LOCATION": "redis://redis:6379/2",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        }
+        },
     }
 }
